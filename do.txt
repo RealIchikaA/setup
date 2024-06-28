@@ -1,0 +1,15 @@
+wsl
+windows terminal
+cp .wslconfig ~
+chmod +x *.sh
+run all sh
+nano /dns/update.sh
+ip a
+
+powershell commands
+expose 22
+
+task sched
+uninstall terminal
+rm -r scripts
+rm recentinstalled
