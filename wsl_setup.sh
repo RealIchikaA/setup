@@ -3,31 +3,20 @@ sudo apt purge snapd
 rm -rf ~/snap
 sudo rm -rf /var/snap
 sudo rm -rf /var/lib/snapd
-sudo apt update -y && sudo apt install openssh-server -y
-sudo bash -c 'cat > /etc/wsl.conf << EOL
-[network]
-generateResolvConf = false
-
-[boot]
-systemd=true
-EOL'
+sudo apt update -y
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+sudo apt update -y && sudo apt install openssh-server docker.io docker-compose tailscale -y
 sudo mv /etc/ssh/ssh_config /etc/ssh/ssh_config.old
 sudo bash -c 'cat > /etc/ssh/ssh_config << EOL
 Include /etc/ssh/ssh_config.d/*.conf
 Host *
     PasswordAuthentication yes
     Port 22
-    SendEnv LANG LC_*
     PermitRootLogin yes
 EOL'
-sudo bash -c 'cat > /etc/resolv.conf << EOL
-[network]
-nameserver 1.1.1.1
-nameserver 1.0.0.1
-EOL'
-curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && 
-sudo dpkg -i cloudflared.deb && 
-sudo cloudflared service install <key>
-
+sudo usermod -aG docker $USER
 echo "Configuration updated. Please restart WSL by running 'wsl --shutdown' from a PowerShell or Command Prompt, and then restart your WSL instance."
 hostname -I
+sudo tailscale up
+
