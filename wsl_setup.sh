@@ -7,7 +7,7 @@ curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg | sudo tee
 curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
 sudo apt update -y && sudo apt install openssh-server docker.io docker-compose tailscale -y
 sudo usermod -aG docker $USER
-echo "Configuration updated. Please restart WSL by running 'wsl --shutdown' from a PowerShell or Command Prompt, and then restart your WSL instance."
 hostname -I
+echo "Restart WSL by running 'wsl --shutdown' from a PowerShell or cmd NOW."
 sudo tailscale up --ssh
 
