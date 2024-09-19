@@ -9,5 +9,6 @@ sudo apt update -y && sudo apt install openssh-server docker.io docker-compose t
 sudo usermod -aG docker $USER
 hostname -I
 echo "Restart WSL by running 'wsl --shutdown' from a PowerShell or cmd NOW."
+history -c
 sudo tailscale up --ssh
 
